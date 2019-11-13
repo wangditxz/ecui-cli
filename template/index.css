@@ -1,0 +1,22 @@
+@import (less) "common/css/UICONST.css";
+/*基于750的设计稿，尺寸使用rem
+@function px2rem(, -font-size: 75px) {
+  @return ( / -font-size) * 1rem;
+}*/
+/*字体用px根据dpr适配
+@mixin font-dpr(-size){
+  :-size/2;
+  font-size: ;
+  [data-dpr="2"] & { font-size: +2px;}
+  [data-dpr="3"] & { font-size: +4px;}
+}*/
+html{
+    font-size:41px !important;
+}
+.content{
+    display: flex;
+    flex-direction: column;
+    width:100%;
+    height:100%;
+    background: #f8f8f8;
+}

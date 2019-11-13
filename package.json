@@ -1,0 +1,19 @@
+{
+  "name": "ecui-cli",
+  "version": "1.0.4",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "release": "npm version patch && npm publish "
+  },
+  "bin": {
+    "ecui-cli": "index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "commander": "^4.0.1",
+    "inquirer": "^7.0.0",
+    "shelljs": "^0.8.3"
+  }
+}
