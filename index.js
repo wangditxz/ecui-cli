@@ -6,6 +6,8 @@ const ecuiinfo = require("./package.json");
 const inquirer = require("inquirer");
 const shell = require("shelljs");
 
+const fs = require("fs");
+
 const initAction = () => {
   inquirer
     .prompt([
@@ -70,12 +72,71 @@ commander
       }
     );
   });
-// commander
-//   .command("path")
-//   .description("目录")
-//   .action((...res) => {
-//     console.log(res);
-//     console.log(__dirname);
-//   });
+commander
+  .command("page <moudule> <router>")
+  .description("创建页面 moudule 模块名称 router 页面名称")
+  .action((moudule, router) => {
+    const isMoudule = fs.existsSync(`./${moudule}`);
+    if (!isMoudule) {
+      fs.mkdirSync(`./${moudule}`);
+      fs.writeFileSync(`./${moudule}/_define_.css`, "");
+      fs.writeFileSync(`./${moudule}/_define_.js`, "");
+    }
+    const res = fs
+      .readdirSync(`./${moudule}`)
+      .filter(item => !item.startsWith(".") && !item.startsWith(".."));
+
+    const isExist = res.some(item => item.startsWith(`route.${router}`));
+    if (isExist) {
+      console.error(`已经存在 ${router} 路由`);
+      return;
+    }
+    const viewStr =
+      moudule + router.charAt(0).toUpperCase() + router.slice(1) + "View";
+    const classStr = `${moudule}-${router}-container`;
+
+    fs.writeFileSync(`./${moudule}/router.${router}.html`, "");
+    fs.writeFileSync(
+      `./${moudule}/router.${router}.js`,
+      `ecui.esr.addRoute('${router}', {
+    model: [''],
+    view: '${viewStr}',
+    onbeforerequest: function (context) {
+    },
+    onbeforerender: function (context) {
+    },
+    onafterrender: function (context) {
+    }
+});`
+    );
+    fs.writeFileSync(
+      `./${moudule}/router.${router}.css`,
+      `.${classStr} {
+}`
+    );
+    fs.writeFileSync(
+      `./${moudule}/layer.${router}.html`,
+      `<!-- target:${viewStr} -->
+<div class="${classStr}">
+    <div class="page-title">detail页面的内容区域</div>
+</div>`
+    );
+
+    const jsStr = fs.readFileSync(`./${moudule}/_define_.js`, {
+      encoding: "utf8"
+    });
+
+    const regexp = new RegExp(
+      `ecui.esr.loadRoute\\(["']${router}["']\\)`,
+      "ig"
+    );
+    if (!regexp.test(jsStr)) {
+      fs.writeFileSync(
+        `./${moudule}/_define_.js`,
+        jsStr + "\n" + `ecui.esr.loadRoute("${router}");`
+      );
+    }
+    console.log("创建完毕");
+  });
 
 commander.parse(process.argv);
