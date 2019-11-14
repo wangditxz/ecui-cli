@@ -95,7 +95,11 @@ commander
       moudule + router.charAt(0).toUpperCase() + router.slice(1) + "View";
     const classStr = `${moudule}-${router}-container`;
 
-    fs.writeFileSync(`./${moudule}/router.${router}.html`, "");
+    fs.writeFileSync(
+      `./${moudule}/layer.${router}.html`,
+      `<header></header>
+<container></container>`
+    );
     fs.writeFileSync(
       `./${moudule}/router.${router}.js`,
       `ecui.esr.addRoute('${router}', {
@@ -115,7 +119,7 @@ commander
 }`
     );
     fs.writeFileSync(
-      `./${moudule}/layer.${router}.html`,
+      `./${moudule}/router.${router}.html`,
       `<!-- target:${viewStr} -->
 <div class="${classStr}">
     <div class="page-title">detail页面的内容区域</div>
