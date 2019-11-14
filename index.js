@@ -22,7 +22,7 @@ const initAction = () => {
       console.log("请稍等...");
       shell.exec(
         `
-            mv ${__dirname}/template ${answers.name}
+        cp -R ${__dirname}/template ${answers.name}
         `,
         (error, stdout, stderr) => {
           if (error) {
