@@ -101,7 +101,7 @@ commander
 <container></container>`
     );
     fs.writeFileSync(
-      `./${moudule}/router.${router}.js`,
+      `./${moudule}/route.${router}.js`,
       `ecui.esr.addRoute('${router}', {
     model: [''],
     view: '${viewStr}',
@@ -114,12 +114,12 @@ commander
 });`
     );
     fs.writeFileSync(
-      `./${moudule}/router.${router}.css`,
+      `./${moudule}/route.${router}.css`,
       `.${classStr} {
 }`
     );
     fs.writeFileSync(
-      `./${moudule}/router.${router}.html`,
+      `./${moudule}/route.${router}.html`,
       `<!-- target:${viewStr} -->
 <div class="${classStr}">
     <div class="page-title">detail页面的内容区域</div>
