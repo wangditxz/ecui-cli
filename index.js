@@ -103,7 +103,7 @@ commander
     fs.writeFileSync(
       `./${moudule}/route.${router}.js`,
       `ecui.esr.addRoute('${router}', {
-    model: [''],
+    model: [],
     view: '${viewStr}',
     onbeforerequest: function (context) {
     },
@@ -122,7 +122,6 @@ commander
       `./${moudule}/route.${router}.html`,
       `<!-- target:${viewStr} -->
 <div class="${classStr}">
-    <div class="page-title">detail页面的内容区域</div>
 </div>`
     );
 
