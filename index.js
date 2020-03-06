@@ -74,8 +74,9 @@ commander
   });
 commander
   .command("page <moudule> <router>")
+  .option("-p", "pc路由(不会生成layer文件)")
   .description("创建页面 moudule 模块名称 router 页面名称")
-  .action((moudule, router) => {
+  .action((moudule, router, options) => {
     const isMoudule = fs.existsSync(`./${moudule}`);
     if (!isMoudule) {
       fs.mkdirSync(`./${moudule}`);
@@ -95,7 +96,7 @@ commander
       moudule + router.charAt(0).toUpperCase() + router.slice(1) + "View";
     const classStr = `${moudule}-${router}-container`;
 
-    fs.writeFileSync(
+   !options.P && fs.writeFileSync(
       `./${moudule}/layer.${router}.html`,
       `<header></header>
 <container></container>`
