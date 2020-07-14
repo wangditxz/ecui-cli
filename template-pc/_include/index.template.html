@@ -1,0 +1,63 @@
+<!-- target:content -->
+<div class="contentWrapper">
+    <div class="header">demo</div>
+    <div class="index-content">
+        <div class="content-left">
+            <ul ui="type:CommonTreeView;collapsed:false" class="menu-list-wrap">
+                <li class="ui-hide"></li>
+                <!-- for: ${menuList} as ${item} -->
+                <ul>
+                    <li class="first-level">
+                        <span class="node-title">${item.name}</span>
+                        <span ui="type:@ArrowBtn;" class="arrow-icon"></span>
+                    </li>
+                    <!-- for: ${item.sub} as ${subItem} -->
+                    <li class="second-level"><a href="${subItem.route}">${subItem.name}</a></li>
+                    <!-- /for -->
+                </ul>
+                <!-- /for -->
+            </ul>
+        </div>
+        <div class="content-main" id="container"></div>
+    </div>
+</div>
+<div id="dialogContainer"></div>
+<div id="dialogContainer_2"></div>
+
+<!-- target: ControlDescView -->
+<div class="control-desc-view-container">
+    <div class="header-section">
+        <div class="row-group">
+            <div class="item">
+                属性
+            </div>
+            <div class="item">
+                说明
+            </div>
+            <div class="item">
+                类型
+            </div>
+            <div class="item">
+                默认值
+            </div>
+        </div>
+    </div>
+    <div class="body-section">
+        <!-- for: ${data} as ${item}, ${index} -->
+        <div class="row-group">
+            <div class="item">
+                ${item.key | default}
+            </div>
+            <div class="item">
+                ${item.desc | default}
+            </div>
+            <div class="item">
+                ${item.type | default}
+            </div>
+            <div class="item">
+                ${item.defaultValue | default}
+            </div>
+        </div>
+        <!-- /for -->
+    </div>
+</div>

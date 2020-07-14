@@ -1,0 +1,164 @@
+@import (less) 'common/css/UICONST.css';
+/*基于750的设计稿，尺寸使用rem
+@function px2rem(, -font-size: 75px) {
+  @return ( / -font-size) * 1rem;
+}*/
+/*字体用px根据dpr适配
+@mixin font-dpr(-size){
+  :-size/2;
+  font-size: ;
+  [data-dpr="2"] & { font-size: +2px;}
+  [data-dpr="3"] & { font-size: +4px;}
+}*/
+html {
+    font-size: 41px !important;
+}
+.content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: #f8f8f8;
+}
+
+.contentWrapper {
+    height: 100%;
+    width: 1200px;
+    background: #ffffff;
+    margin: 0 auto;
+    .header {
+        width: 1200px;
+        height: 80px;
+        line-height: 80px;
+        border-bottom: 1px solid #ccc;
+        font-size: 24px;
+        color: #3366ff;
+        position: fixed;
+        top: 0;
+        background: #ffffff;
+    }
+    .index-content {
+        height: calc(~'100% - 83px');
+        width: 100%;
+        padding-top: 82px;
+        .content-left {
+            width: 240px;
+            height: calc(~'100% - 55px');
+            display: inline-block;
+            vertical-align: middle;
+            overflow: auto;
+            padding-top: 50px;
+            box-shadow: 4px 0 8px 0 rgba(232, 240, 248, 0.25);
+            .menu-list-wrap {
+                .first-level {
+                    color: #333333;
+                    font-size: 16px;
+                    font-weight: bold;
+                    margin-top: 15px;
+                    line-height: 40px;
+                    height: 40px;
+                    display: flex;
+                    align-items: center;
+                    .node-title {
+                        flex: 1;
+                    }
+                    .arrow-icon {
+                        margin-left: 10px;
+                        margin-right: 15px;
+                    }
+                }
+                .second-level-title {
+                    font-size: 12px;
+                    color: #999;
+                    line-height: 26px;
+                    height: 26px;
+                    margin-top: 15px;
+                }
+                .second-level {
+                    padding-left: 20px;
+                    display: block;
+                    height: 40px;
+                    color: #444;
+                    line-height: 40px;
+                    font-size: 14px;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    font-weight: 400;
+                }
+            }
+        }
+        .content-main {
+            width: 950px;
+            height: calc(~'100% - 55px');
+            display: inline-block;
+            vertical-align: middle;
+            padding-top: 50px;
+            font-size: 14px;
+            overflow: auto;
+            .title {
+                font-size: 24px;
+                color: #000000;
+                font-weight: bold;
+                margin: 20px 0;
+            }
+            .sub-title {
+                font-size: 16px;
+                color: #000000;
+                font-weight: bold;
+                margin: 15px 0;
+            }
+            .sub-title-2 {
+                font-size: 14px;
+                color: #000000;
+                font-weight: bold;
+                margin: 10px 0;
+            }
+            .mod-box {
+                border: 1px solid #ebebeb;
+                border-radius: 4px;
+                padding: 10px 10px 0px 10px;
+
+                .code-view {
+                    margin-top: 10px;
+                }
+            }
+            .code-options {
+                height: 50px;
+                line-height: 50px;
+                /* width: fit-content; */
+                /* padding-right: px2rem(35px); */
+                /* text-align: center; */
+                /* margin: 0 auto; */
+                /* background: url(images/frd/more.png) no-repeat center right;
+                background-size: px2rem(20px) px2rem(12px); */
+                border-top: 1px solid #ebebeb;
+                cursor: pointer;
+                width: 100%;
+                .show-code {
+                    display: inline-block;
+                    width: calc(~'100% - 110px');
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                }
+                .copy {
+                    display: inline-block;
+                    width: 100px;
+                    height: 50px;
+                    line-height: 50px;
+                    text-align: center;
+                }
+            }
+            .show-src-open {
+                /* background: url(images/frd/more-open.png) no-repeat center right;
+                background-size: px2rem(20px) px2rem(12px); */
+            }
+            pre {
+                code {
+                    background: #fffaf4;
+                }
+            }
+        }
+    }
+}

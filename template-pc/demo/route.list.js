@@ -1,0 +1,1 @@
+ecui.esr.addRoute('list', { main: 'container', view: 'demo_list' });

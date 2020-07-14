@@ -10,29 +10,36 @@ const fs = require("fs");
 
 const initAction = () => {
   inquirer
-    .prompt([
-      {
-        type: "input",
-        message: "请输入项目名称",
-        name: "name"
-      }
-    ])
-    .then(answers => {
-      console.log(answers.name);
-      console.log("请稍等...");
-      shell.exec(
-        `
-        cp -R ${__dirname}/template ${answers.name}
-        `,
-        (error, stdout, stderr) => {
-          if (error) {
-            console.error(`exec error: ${error}`);
-            return;
+      .prompt([
+          {
+              type: 'input',
+              message: '请输入项目名称',
+              name: 'name'
+          },
+          {
+              type: 'list',
+              message: '请选择项目类型',
+              name: 'type',
+              choices: ['pc', 'h5']
           }
-          console.log("初始化成功");
-        }
-      );
-    });
+      ])
+      .then((answers) => {
+          console.log(answers.name);
+          console.log(answers.type);
+          console.log('请稍等...');
+          shell.exec(
+              `
+        cp -R ${__dirname}/template-${answers.type} ${answers.name}
+        `,
+              (error, stdout, stderr) => {
+                  if (error) {
+                      console.error(`exec error: ${error}`);
+                      return;
+                  }
+                  console.log('初始化成功');
+              }
+          );
+      });
 };
 
 commander.version(ecuiinfo.version);
