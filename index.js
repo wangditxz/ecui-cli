@@ -2,45 +2,11 @@
 
 const commander = require('commander');
 const ecuiinfo = require('./package.json');
-
-const inquirer = require('inquirer');
 const shell = require('shelljs');
 
-const fs = require('fs');
-
-const initAction = () => {
-    inquirer
-        .prompt([
-            {
-                type: 'input',
-                message: '请输入项目名称',
-                name: 'name'
-            },
-            {
-                type: 'list',
-                message: '请选择项目类型',
-                name: 'type',
-                choices: ['pc', 'h5']
-            }
-        ])
-        .then((answers) => {
-            console.log(answers.name);
-            console.log(answers.type);
-            console.log('请稍等...');
-            shell.exec(
-                `
-        cp -R ${__dirname}/template-${answers.type} ${answers.name}
-        `,
-                (error, stdout, stderr) => {
-                    if (error) {
-                        console.error(`exec error: ${error}`);
-                        return;
-                    }
-                    console.log('初始化成功');
-                }
-            );
-        });
-};
+// 事件
+const initAction = require('./action/init');
+const createPage = require('./action/createPage');
 
 commander.version(ecuiinfo.version);
 
@@ -80,68 +46,6 @@ commander
     .command('page <moudule> <router>')
     .option('-p', 'pc路由(不会生成layer文件)')
     .description('创建页面 moudule 模块名称 router 页面名称')
-    .action((moudule, router, options) => {
-        const isMoudule = fs.existsSync(`./${moudule}`);
-        if (!isMoudule) {
-            fs.mkdirSync(`./${moudule}`);
-            fs.writeFileSync(`./${moudule}/_define_.css`, '');
-            fs.writeFileSync(`./${moudule}/_define_.js`, '');
-        }
-        const res = fs
-            .readdirSync(`./${moudule}`)
-            .filter((item) => !item.startsWith('.') && !item.startsWith('..'));
-
-        const isExist = res.some((item) => item.startsWith(`route.${router}`));
-        if (isExist) {
-            console.error(`已经存在 ${router} 路由`);
-            return;
-        }
-        const viewStr = moudule + router.charAt(0).toUpperCase() + router.slice(1) + 'View';
-        const classStr = `${moudule}-${router}-container`;
-
-        !options.P &&
-            fs.writeFileSync(
-                `./${moudule}/layer.${router}.html`,
-                `<header></header>
-<container></container>`
-            );
-        fs.writeFileSync(
-            `./${moudule}/route.${router}.js`,
-            `ecui.esr.addRoute('${router}', {
-    model: [],
-    view: '${viewStr}',
-    onbeforerequest: function (context) {
-    },
-    onbeforerender: function (context) {
-    },
-    onafterrender: function (context) {
-    }
-});`
-        );
-        fs.writeFileSync(
-            `./${moudule}/route.${router}.css`,
-            `.${classStr} {
-}`
-        );
-        fs.writeFileSync(
-            `./${moudule}/route.${router}.html`,
-            `<!-- target:${viewStr} -->
-<div class="${classStr}">
-</div>`
-        );
-
-        const jsStr = fs.readFileSync(`./${moudule}/_define_.js`, {
-            encoding: 'utf8'
-        });
-
-        const regexp = new RegExp(`ecui.esr.loadRoute\\(["']${router}["']\\)`, 'ig');
-        if (!regexp.test(jsStr)) {
-            fs.writeFileSync(
-                `./${moudule}/_define_.js`,
-                jsStr + '\n' + `ecui.esr.loadRoute("${router}");`
-            );
-        }
-        console.log('创建完毕');
-    });
+    .action(createPage);
 
 commander.parse(process.argv);
