@@ -7,6 +7,7 @@ const shell = require('shelljs');
 // 事件
 const initAction = require('./action/init');
 const createPage = require('./action/createPage');
+const frd = require('./action/frd');
 
 commander.version(ecuiinfo.version);
 
@@ -47,5 +48,10 @@ commander
     .option('-p', 'pc路由(不会生成layer文件)')
     .description('创建页面 moudule 模块名称 router 页面名称')
     .action(createPage);
+
+commander
+    .command('frd')
+    .description('引入frd控件库')
+    .action(frd);
 
 commander.parse(process.argv);
