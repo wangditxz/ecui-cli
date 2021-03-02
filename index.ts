@@ -1,13 +1,14 @@
 // #!/usr/bin/env node
+// 事件
+import initAction from './action/init';
+import createPage from './action/createPage';
+import frd from './action/frd';
 
 const commander = require('commander');
 const ecuiinfo = require('./package.json');
 const shell = require('shelljs');
 
-// 事件
-const initAction = require('./action/init');
-const createPage = require('./action/createPage');
-const frd = require('./action/frd');
+
 
 commander.version(ecuiinfo.version);
 
@@ -24,7 +25,7 @@ commander.command('init').description('创建项目').action(initAction);
 commander
     .command('build <projectname>')
     .description('编译')
-    .action((projectname) => {
+    .action((projectname?: string) => {
         console.log('开始编译');
         if (!projectname) {
             console.log('请输入要编译的项目');
@@ -34,7 +35,7 @@ commander
             `
         ./ECUI/build.sh ${projectname}
     `,
-            (error, stdout, stderr) => {
+            (error?: string) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;

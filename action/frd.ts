@@ -2,7 +2,7 @@ const inquirer = require('inquirer');
 const shell = require('shelljs');
 const path = require('path');
 
-module.exports = () => {
+export default () => {
     inquirer
         .prompt([
             {
@@ -11,7 +11,9 @@ module.exports = () => {
                 name: 'name'
             }
         ])
-        .then((answers) => {
+        .then((answers: {
+            name: string
+        }) => {
             var name = answers.name || 'frd-lib';
             console.log('导入的名称为: ', name);
             console.log('重新打包控件库');
@@ -20,7 +22,7 @@ module.exports = () => {
             const targetJSPath = path.resolve(envPath, `./${name}.js`);
             const targetCSSPath = path.resolve(envPath, `./${name}.css`);
             shell.cd(libPath);
-            shell.exec('./build.sh', (error, stdout, stderr) => {
+            shell.exec('./build.sh', (error?: string) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;

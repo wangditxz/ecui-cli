@@ -1,8 +1,8 @@
 const inquirer = require('inquirer');
 const shell = require('shelljs');
-const path = require('path');
+import * as path from 'path';
 
-module.exports = () => {
+export default () => {
     inquirer
         .prompt([
             {
@@ -17,14 +17,17 @@ module.exports = () => {
                 choices: ['pc', 'h5']
             }
         ])
-        .then((answers) => {
+        .then((answers: {
+            name: string,
+            type: string
+        }) => {
             console.log(answers.name);
             console.log(answers.type);
             console.log('请稍等...');
             const envPath = process.cwd();
             const targetPath = path.resolve(envPath, `./${answers.name}`);
             const origtinPath = path.resolve(__dirname, `../template-${answers.type}`);
-            shell.exec(`cp -R ${origtinPath} ${targetPath}`, (error, stdout, stderr) => {
+            shell.exec(`cp -R ${origtinPath} ${targetPath}`, (error?: string) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;

@@ -1,7 +1,9 @@
 const path = require('path');
 const fs = require('fs');
 
-module.exports = (moudule, router, options) => {
+export default (moudule: string, router: string, options: {
+    P: boolean
+}) => {
     const envPath = process.cwd();
 
     // 判断是否有当前模块
@@ -16,9 +18,9 @@ module.exports = (moudule, router, options) => {
     // 判断是否是重名页面
     const res = fs
         .readdirSync(modulePath)
-        .filter((item) => !item.startsWith('.') && !item.startsWith('..'));
+        .filter((item: string) => !item.startsWith('.') && !item.startsWith('..'));
 
-    const isExist = res.some((item) => item.startsWith(`route.${router}`));
+    const isExist = res.some((item: string) => item.startsWith(`route.${router}`));
     if (isExist) {
         console.error(`已经存在 ${router} 路由`);
         return;
