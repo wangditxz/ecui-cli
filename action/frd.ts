@@ -1,6 +1,6 @@
-const inquirer = require('inquirer');
-const shell = require('shelljs');
-const path = require('path');
+import * as path from 'path';
+import * as shell from 'shelljs';
+import * as inquirer from 'inquirer';
 
 export default () => {
     inquirer
@@ -22,7 +22,7 @@ export default () => {
             const targetJSPath = path.resolve(envPath, `./${name}.js`);
             const targetCSSPath = path.resolve(envPath, `./${name}.css`);
             shell.cd(libPath);
-            shell.exec('./build.sh', (error?: string) => {
+            shell.exec('./build.sh', (error) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;

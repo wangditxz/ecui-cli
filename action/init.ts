@@ -1,6 +1,8 @@
-const inquirer = require('inquirer');
-const shell = require('shelljs');
 import * as path from 'path';
+import * as shell from 'shelljs';
+import * as inquirer from 'inquirer';
+import { isRootDir } from '../tool'
+
 
 export default () => {
     inquirer
@@ -23,11 +25,14 @@ export default () => {
         }) => {
             console.log(answers.name);
             console.log(answers.type);
-            console.log('请稍等...');
             const envPath = process.cwd();
+            if (!isRootDir(envPath)) {
+                throw new Error("请在ECUI同级目录执行此命令");
+            }
+            console.log('请稍等...');
             const targetPath = path.resolve(envPath, `./${answers.name}`);
             const origtinPath = path.resolve(__dirname, `../template-${answers.type}`);
-            shell.exec(`cp -R ${origtinPath} ${targetPath}`, (error?: string) => {
+            shell.exec(`cp -R ${origtinPath} ${targetPath}`, (error) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;

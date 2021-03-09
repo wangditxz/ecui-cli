@@ -4,9 +4,9 @@ import initAction from './action/init';
 import createPage from './action/createPage';
 import frd from './action/frd';
 
-const commander = require('commander');
-const ecuiinfo = require('./package.json');
-const shell = require('shelljs');
+import * as commander from 'commander';
+import * as ecuiinfo from './package.json';
+import * as shell from 'shelljs';
 
 
 
@@ -35,7 +35,7 @@ commander
             `
         ./ECUI/build.sh ${projectname}
     `,
-            (error?: string) => {
+            (error) => {
                 if (error) {
                     console.error(`exec error: ${error}`);
                     return;
